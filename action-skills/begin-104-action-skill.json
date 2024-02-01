@@ -1,12 +1,12 @@
 {
-  "name": "Demo - Demo Site-action",
+  "name": "Discovery expert-action",
   "type": "action",
   "valid": true,
   "status": "Available",
-  "created": "2022-08-18T13:56:04.658Z",
-  "updated": "2022-11-14T21:36:10.624Z",
+  "created": "2024-02-01T16:53:02.051Z",
+  "updated": "2024-02-01T18:22:09.012Z",
   "language": "en",
-  "skill_id": "5ee9bc0c-1e87-44a4-9b11-6ef984228e12",
+  "skill_id": "b55fa8b4-03bc-4301-af9e-ba4d46781639",
   "workspace": {
     "actions": [
       {
@@ -163,7 +163,8 @@
             "resolver": {
               "type": "invoke_another_action_and_end",
               "invoke_action": {
-                "action": null,
+                "action": "action_42679",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_490_result_1"
               }
@@ -439,6 +440,7 @@
               "type": "invoke_another_action",
               "invoke_action": {
                 "action": "action_2644",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_829_result_1"
               }
@@ -616,11 +618,17 @@
             "data_type": "any"
           },
           {
-            "title": "",
+            "title": "No response",
+            "privacy": {
+              "enabled": false
+            },
             "variable": "step_490",
             "data_type": "any"
           },
           {
+            "privacy": {
+              "enabled": false
+            },
             "variable": "step_490_result_1",
             "data_type": "any"
           },
@@ -753,6 +761,7 @@
               "type": "invoke_another_action_and_end",
               "invoke_action": {
                 "action": "action_45200",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_871_result_1"
               }
@@ -1875,6 +1884,7 @@
               "type": "invoke_another_action_and_end",
               "invoke_action": {
                 "action": "action_38196",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_747_result_1"
               }
@@ -4904,7 +4914,8 @@
                 "type": "integration_interaction",
                 "method": "GET",
                 "internal": {
-                  "catalog_item_id": "3233dca4-e2be-409e-98e2-5c05c8511e8b"
+                  "spec_hash_id": null,
+                  "catalog_item_id": null
                 },
                 "request_mapping": {
                   "path": [
@@ -6071,7 +6082,8 @@
                 "type": "integration_interaction",
                 "method": "POST",
                 "internal": {
-                  "catalog_item_id": "3233dca4-e2be-409e-98e2-5c05c8511e8b"
+                  "spec_hash_id": null,
+                  "catalog_item_id": null
                 },
                 "request_mapping": {
                   "body": [
@@ -8733,6 +8745,7 @@
               "type": "invoke_another_action_and_end",
               "invoke_action": {
                 "action": "fallback",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_002_result_1"
               }
@@ -8986,6 +8999,7 @@
               "type": "invoke_another_action_and_end",
               "invoke_action": {
                 "action": "action_9125",
+                "policy": "default",
                 "parameters": null,
                 "result_variable": "step_599_result_1"
               }
@@ -10455,19 +10469,87 @@
         "data_type": "data-type_43375"
       }
     ],
+    "collections": [],
     "counterexamples": [],
     "system_settings": {
+      "nlp": {
+        "model": "latest"
+      },
+      "variable": {
+        "format": {
+          "time": {
+            "pattern": "short"
+          },
+          "currency": {
+            "fraction_digits": 2
+          }
+        }
+      },
+      "launch_mode": {
+        "default": "learning",
+        "enabled": false,
+        "learning": {
+          "step_retry_threshold": 2,
+          "use_connect_to_support": "more_often",
+          "single_answer_clarification": "more_often",
+          "disambiguation_clarification": "more_often"
+        },
+        "confident": {
+          "step_retry_threshold": 4,
+          "use_connect_to_support": "sometimes",
+          "single_answer_clarification": "sometimes",
+          "disambiguation_clarification": "sometimes"
+        }
+      },
       "topic_switch": {
         "enabled": true,
         "messages": {
-          "confirm_return": {
-            "text": "Return to previous topic?"
+          "confirmation_failure": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Please reply back with yes or no"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              }
+            ]
           },
-          "confirm_switch": {
-            "text": "Switch from the current topic?"
+          "confirmation_request": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Do you want to return to your previous topic "
+                        },
+                        {
+                          "system_variable": "digressed_from"
+                        },
+                        {
+                          "scalar": "?"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              }
+            ]
           }
         },
-        "question_steps_threshold": 2
+        "max_tries": 3
       },
       "disambiguation": {
         "prompt": "Did you mean:",
@@ -10485,8 +10567,9 @@
     "learning_opt_out": false
   },
   "description": "created for assistant 22bac53a-215f-44d7-a0f0-fcc790efd83a",
-  "assistant_id": "244fe2a1-3cd4-4eae-9cca-4d5b23356edb",
-  "workspace_id": "5ee9bc0c-1e87-44a4-9b11-6ef984228e12",
+  "assistant_id": "4f5e17ff-a4d3-478f-b0b2-b8f6386efbbc",
+  "workspace_id": "b55fa8b4-03bc-4301-af9e-ba4d46781639",
   "dialog_settings": {},
-  "next_snapshot_version": "2"
+  "next_snapshot_version": "1",
+  "environment_id": "cba0f78c-191a-4f80-8d90-44c1f528b332"
 }
